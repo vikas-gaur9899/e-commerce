@@ -4,11 +4,12 @@ import { Link, NavLink } from 'react-router-dom'
 import '../App.css'
 // import { useState } from 'react'
 const Navbar = () => {
-    // const { isclicked , setclicked } = useState("false");
+    // const { isclicked , setclicked } = useState("false"); 
+    const [visible , setvisible] = useState(false);
   return (
-    <div className='flex item-center justify-between py-5 font-medium'>
+    <div className='flex items-center justify-between py-5 font-medium'>
       <img src={assets.logo} className='w-36 '/>
-      <ul className=' sm:flex gap-5 text-sm text-gray-700 '>
+      <ul className=' hidden sm:flex gap-5 text-sm text-gray-700 '>
 
      <NavLink  to="/" className='flex flex-col items-center gap-1'>
         <p>HOME</p>
@@ -44,15 +45,42 @@ const Navbar = () => {
                     </div>
                </div>
         </div>
-        <Link to="/cart" className='realtive'>
+        <Link to="/cart" className='relative'>
         <img src={assets.cart_icon} className='w-5 min-w-5' alt=""/>
        
         <p className=' absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]'>10</p>
         </Link>
-        <img src={assets.menu_icon} alt=""  className='w-5 cursor-pointer sm:hidden '/>
+        <img onClick={()=>{
+          setvisible(true);
+        }} src={assets.menu_icon} alt=""  className='w-5 cursor-pointer sm:hidden '/>
+
       </div> 
 
-
+        {/* { seidebar menus  fro small screens } */}
+        <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full': 'w-0'}`}>
+          <div className='flex flex-col text-gray-600'
+          >
+            <div onClick={()=>{
+              setvisible(false);
+            }} className='flex items-center gap-4 p-3 cursor-pointer'>
+              <img src={assets.dropdown_icon} className='h-4 rotate-180' alt="" />
+              <p>Back</p>
+            </div>
+             <NavLink onClick={()=>{
+              setvisible(false);
+             }} to="/"  className=" py-2 pl-6 border"> Home</NavLink>
+            <NavLink onClick={()=>{
+              setvisible(false)
+             }} to="/collection" className=" py-2 pl-6 border" > Collection</NavLink>
+            <NavLink onClick={()=>{
+              setvisible(false);
+             }} to="/about" className=" py-2 pl-6 border" > About</NavLink>
+              <NavLink onClick={()=>{
+              setvisible(false);
+             }} to="/contact"  className=" py-2 pl-6 border"> Contact</NavLink>
+          </div>
+           
+           </div>
     </div>
   )
 }
